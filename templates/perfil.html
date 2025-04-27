@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .perfil-container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #4b0082;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+        .boton {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 8px 5px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-editar {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-editar:hover {
+            background-color: #0069d9;
+        }
+        .btn-volver {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-volver:hover {
+            background-color: #5a6268;
+        }
+        .btn-cambiar {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-cambiar:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="perfil-container">
+        <h1>👤 Mi Perfil</h1>
+        <p>Usuario logueado: <strong>{{ usuario }}</strong></p>
+
+        <a href="{{ url_for('editar_perfil') }}" class="boton btn-editar">✏️ Editar Perfil</a>
+        <a href="{{ url_for('cambiar_cuenta_mt5') }}" class="boton btn-cambiar">🔁 Cambiar Cuenta MT5</a>
+        <a href="{{ url_for('bienvenida') }}" class="boton btn-volver">🔙 Volver a inicio</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <h3 class="text-center mb-4">Iniciar Sesión</h3>
+
+        <!-- FORMULARIO DE LOGIN -->
+        <form method="POST" action="/login" id="form-login">
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input type="text" class="form-control" id="usuario" name="usuario" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="/register" class="text-decoration-none">¿No tienes cuenta? Regístrate aquí</a>
+        </div>
+
+        <div class="text-center mt-2">
+            <a href="#" onclick="toggleRecovery()" class="text-decoration-none text-muted">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <!-- FORMULARIO DE RECUPERACIÓN (INICIALMENTE OCULTO) -->
+        <div id="recovery-section" class="mt-5" style="display: none;">
+            <h5 class="text-center mb-3">🔐 Recuperar contraseña</h5>
+            <form method="POST" action="/cambiar_clave">
+                <div class="mb-3">
+                    <input type="email" name="correo" class="form-control" placeholder="Correo registrado" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="codigo" class="form-control" placeholder="Código de recuperación" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" name="nueva_pass" class="form-control" placeholder="Nueva contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Cambiar contraseña</button>
+            </form>
+            <div class="text-center mt-2">
+                <a href="/recuperar" class="text-decoration-none">¿Aún no tienes código? Solicitar aquí</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function toggleRecovery() {
+        const recovery = document.getElementById('recovery-section');
+        const loginForm = document.getElementById('form-login');
+        if (recovery.style.display === 'none') {
+            recovery.style.display = 'block';
+            loginForm.style.display = 'none';
+        } else {
+            recovery.style.display = 'none';
+            loginForm.style.display = 'block';
+        }
+    }
+</script>
+{% endblock %}

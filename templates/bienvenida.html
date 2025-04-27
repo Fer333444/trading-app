@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bienvenida</title>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .card {
+      background-color: white;
+      padding: 25px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-azul {
+      background-color: #007bff;
+    }
+    .btn-verde {
+      background-color: #28a745;
+    }
+    .btn-rojo {
+      background-color: #dc3545;
+    }
+    nav {
+      background-color: #000;
+      color: white;
+      padding: 10px;
+      text-align: right;
+    }
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <strong>Trading App</strong>
+    <a href="/bienvenida">Inicio</a>
+    <a href="/historial">Historial</a>
+    <a href="/sistema_riesgo">Sistema</a>
+    <a href="/perfil">Perfil</a>
+    <a href="/logout" class="btn-rojo">Cerrar sesión</a>
+  </nav>
+
+  <h1>¡BIENVENIDO!</h1>
+
+  <div class="card">
+    <p>👤 Usuario: <strong>{{ session['usuario'] }}</strong></p>
+    <p>📅 Último acceso: <strong>{{ session['ultimo_login'] }}</strong></p>
+    <p>📋 Cuenta MT5: <strong>No conectada</strong></p>
+  </div>
+
+  <div>
+    <a href="/sistema_riesgo">
+      <button class="btn-azul">📊 Sistema de Riesgo</button>
+    </a>
+    <a href="/historial">
+      <button class="btn-azul">📁 Historial</button>
+    </a>
+    <a href="/perfil">
+      <button class="btn-azul">👤 Perfil</button>
+    </a>
+    <a href="/lotaje_tiempo_real">
+      <button class="btn-verde">🧮 Calculadora de Lotaje</button>
+    </a>
+  </div>
+
+</body>
+</html>

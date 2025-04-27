@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Cuenta MT5</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 400px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <h2>🔐 Conectar a MetaTrader 5</h2>
+
+        <label for="mt5_usuario">Número de cuenta:</label>
+        <input type="text" name="mt5_usuario" id="mt5_usuario" value="510065036" required>
+
+        <label for="mt5_password">Contraseña:</label>
+        <input type="password" name="mt5_password" id="mt5_password" value="8j!gSxPFL" required>
+
+        <label for="mt5_servidor">Servidor:</label>
+        <input type="text" name="mt5_servidor" id="mt5_servidor" value="FTMO-Server" required>
+
+        <button type="submit">Guardar cuenta</button>
+    </form>
+</body>
+</html>

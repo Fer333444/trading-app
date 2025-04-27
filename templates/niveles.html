@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Niveles{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-end mb-4">
+    <form method="POST" class="d-flex gap-2">
+        <button 
+            type="submit" 
+            name="voto" 
+            value="G" 
+            class="btn btn-outline-primary"
+            ondblclick="document.getElementById('doble_g').value='1'; this.form.submit();"
+        >
+            G {% if voto == 'G' %}✅{% endif %}
+        </button>
+        <button type="submit" name="voto" value="P" class="btn btn-outline-danger">
+            P {% if voto == 'P' %}❌{% endif %}
+        </button>
+        <button type="submit" name="reiniciar" value="1" class="btn btn-outline-secondary">
+            🔄 Reiniciar todo
+        </button>
+        <input type="hidden" name="doble_g" id="doble_g" value="0">
+    </form>
+</div>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">
+        📊 Niveles de Rendimiento 
+        <span style="font-size: 18px;" class="ms-3">
+            Balance: <strong>${{ balance }}</strong>
+        </span>
+    </h2>
+    <table class="table table-bordered text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Nivel</th>
+                <th>%</th>
+                <th>G</th>
+                <th>P</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for n in niveles %}
+            <tr>
+                <td>{{ n.nivel }}</td>
+                <td>{{ n.porcentaje }}</td>
+                <td>
+                    {% if marcas and marcas[loop.index0] and marcas[loop.index0]['tipo'] == 'G' %}
+                        ✅
+                    {% endif %}
+                </td>
+                <td>
+                    {% if marcas and marcas[loop.index0] and marcas[loop.index0]['tipo'] == 'P' %}
+                        ❌
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

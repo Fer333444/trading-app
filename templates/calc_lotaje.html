@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Lotaje</title>
+  <style>
+    body { font-family: Arial; padding: 30px; background: #f4f4f4; }
+    form { background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; }
+    label, input, select { display: block; width: 100%; margin-bottom: 15px; }
+    input, select { padding: 10px; }
+    button { padding: 10px; background: #007bff; color: white; border: none; width: 100%; border-radius: 5px; }
+    .result { margin-top: 20px; background: #e0f7fa; padding: 10px; border-radius: 8px; text-align: center; }
+    .error { color: red; text-align: center; }
+  </style>
+</head>
+<body>
+  <form method="POST">
+    <h2>Calculadora de Lotaje</h2>
+
+    <label>Par de Divisas</label>
+    <select name="symbol">
+      <option value="EUR/USD">EUR/USD</option>
+      <option value="GBP/USD">GBP/USD</option>
+      <option value="AUD/USD">AUD/USD</option>
+      <option value="USD/JPY">USD/JPY</option>
+      <option value="USD/CHF">USD/CHF</option>
+      <option value="USD/CAD">USD/CAD</option>
+      <option value="EUR/GBP">EUR/GBP</option>
+      <option value="EUR/JPY">EUR/JPY</option>
+      <option value="GBP/JPY">GBP/JPY</option>
+      <option value="XAU/USD">XAU/USD</option>
+    </select>
+
+    <label>Capital</label>
+    <input type="number" step="any" name="capital" required>
+
+    <label>Riesgo (%)</label>
+    <input type="number" step="any" name="riesgo_pct" required>
+
+    <label>Stop Loss (pips)</label>
+    <input type="number" step="any" name="stop_loss" required>
+
+    <button type="submit">Calcular</button>
+
+    {% if lotaje is not none %}
+      <div class="result">
+        💰 Riesgo: <strong>${{ riesgo_dinero }}</strong><br>
+        📊 Lotaje recomendado: <strong>{{ lotaje }}</strong>
+      </div>
+    {% endif %}
+
+    {% if error %}
+      <div class="error">⚠️ {{ error }}</div>
+    {% endif %}
+  </form>
+</body>
+</html>
