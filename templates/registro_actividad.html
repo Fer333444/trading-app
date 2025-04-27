@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Registro de Actividad{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-info text-white">
+      <h4 class="mb-0">📊 Resumen de Actividad</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Usuario:</strong> {{ usuario }}</p>
+      <p><strong>Total de Operaciones:</strong> {{ total_operaciones }}</p>
+      <p><strong>Ganancia Total:</strong> <span class="text-success">${{ "%.2f"|format(ganancia_total) }}</span></p>
+      <hr>
+      <h5>Última operación</h5>
+      {% if ultima_op %}
+        <ul>
+          <li><strong>Símbolo:</strong> {{ ultima_op.symbol }}</li>
+          <li><strong>Ticket:</strong> {{ ultima_op.ticket }}</li>
+          <li><strong>Tipo:</strong> {{ ultima_op.type }}</li>
+          <li><strong>Volumen:</strong> {{ ultima_op.volume }}</li>
+          <li><strong>Profit:</strong>
+            {% if ultima_op.profit >= 0 %}
+              <span class="text-success">+${{ "%.2f"|format(ultima_op.profit) }}</span>
+            {% else %}
+              <span class="text-danger">-${{ "%.2f"|format(ultima_op.profit|abs) }}</span>
+            {% endif %}
+          </li>
+        </ul>
+      {% else %}
+        <p class="text-muted">No se encontró una operación reciente.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

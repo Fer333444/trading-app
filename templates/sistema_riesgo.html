@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Riesgo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+        .contenedor-tabla {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+        }
+        table {
+            width: 600px;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #212529;
+            color: white;
+        }
+        .acciones-laterales {
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            top: calc(48px + ({{ nivel_actual - 1 }} * 48px));
+        }
+        .btn {
+            padding: 7px 16px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-info {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .fw-bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Sistema de Riesgo e Interés Compuesto</h2>
+
+    <div class="info">
+        <p>
+            <strong>Nivel Actual:</strong> {{ nivel_actual }} &nbsp; | &nbsp;
+            <strong>Anterior:</strong> {{ nivel_anterior }}
+        </p>
+        <p><strong>Porcentaje de Riesgo:</strong> {{ (porcentaje_actual * 100) | round(2) }}%</p>
+    </div>
+
+    <div class="contenedor-tabla">
+        <!-- Tabla -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Nivel</th>
+                    <th>Capital</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fila in tabla %}
+                    <tr>
+                        <td>{{ fila.nivel }}</td>
+                        <td>
+                            {% if fila.nivel == nivel_actual %}
+                                <div class="fw-bold">
+                                    ${{ "%.2f"|format(fila.nuevo_capital) }}
+                                </div>
+                            {% endif %}
+                            {% if fila.nivel == 2 and ult_op %}
+                                <div style="margin-top: 5px;">
+                                    {% set profit = ult_op.get("profit", 0) | float %}
+                                    {% if profit > 0 %}
+                                        <span style="color: green;">+${{ "%.2f"|format(profit) }}</span>
+                                    {% elif profit < 0 %}
+                                        <span style="color: red;">-${{ "%.2f"|format(profit | abs) }}</span>
+                                    {% else %}
+                                        <span style="color: gray;">$0.00</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Botones a la derecha -->
+        <div class="acciones-laterales">
+            <form method="POST">
+                <button type="submit" name="accion" value="tp" class="btn btn-success">✔ TP</button>
+                <button type="submit" name="accion" value="sl" class="btn btn-danger">✘ SL</button>
+                <button type="submit" name="accion" value="be" class="btn btn-info">🔵 BE</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Formulario para ejecutar operación en MT5 -->
+    <div style="margin-top: 50px; display: flex; justify-content: center;">
+        <form method="POST" action="/sistema_riesgo" style="padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 400px;">
+            <h3 style="text-align: center;">📈 Ejecutar operación en MT5</h3>
+
+            <input type="hidden" name="accion" value="ejecutar_mt5">
+
+            <label><strong>Símbolo MT5:</strong></label><br>
+            <input type="text" name="mt5_symbol" placeholder="Ej: EURUSD" required style="width: 100%; padding: 8px;"><br><br>
+
+            <label><strong>Tipo de orden:</strong></label><br>
+            <select name="mt5_type" required style="width: 100%; padding: 8px;">
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+            </select><br><br>
+
+            <label><strong>Volumen:</strong></label><br>
+            <input type="number" step="0.01" name="mt5_volume" placeholder="Ej: 0.10" required style="width: 100%; padding: 8px;"><br><br>
+
+            <label><strong>Stop Loss (SL):</strong></label><br>
+            <input type="number" step="0.0001" name="mt5_sl" placeholder="Ej: 1.0850" required style="width: 100%; padding: 8px;"><br><br>
+
+            <label><strong>Take Profit (TP):</strong></label><br>
+            <input type="number" step="0.0001" name="mt5_tp" placeholder="Ej: 1.0950" required style="width: 100%; padding: 8px;"><br><br>
+
+            <button type="submit" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; width: 100%;">Ejecutar operación</button>
+        </form>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <a href="{{ url_for('bienvenida') }}" class="btn-back">← Atrás al Inicio</a>
+    </div>
+</body>
+</html>
