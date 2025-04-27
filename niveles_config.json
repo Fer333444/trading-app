@@ -1,0 +1,13 @@
+{
+    "nivel_actual": 1,
+    "nivel_anterior": "-",
+    "capital_referencia": 100000.0,
+    "porcentajes": [
+        0.0481,
+        0.0722,
+        0.1082,
+        0.1624,
+        0.2436,
+        0.3654
+    ]
+}
