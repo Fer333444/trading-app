@@ -1,4 +1,4 @@
-import MetaTrader5 as mt5
+
 import pyttsx3
 
 # Reemplaza con tus datos reales

@@ -1,4 +1,4 @@
-import MetaTrader5 as mt5
+
 
 def conectar_mt5():
     if mt5.account_info() is None:

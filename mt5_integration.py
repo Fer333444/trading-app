@@ -1,5 +1,4 @@
 from datetime import datetime
-import MetaTrader5 as mt5
 import json
 
 # ✅ FUNCIÓN para guardar historial (no modificar)

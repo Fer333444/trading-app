@@ -1,4 +1,4 @@
-import MetaTrader5 as mt5
+
 
 def conectar_mt5():
     # Verificamos si ya estamos conectados a MT5

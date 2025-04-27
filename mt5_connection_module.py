@@ -1,4 +1,4 @@
-import MetaTrader5 as mt5
+
 
 def enviar_orden_mt5(symbol, tipo, volumen, sl, tp):
     info = mt5.symbol_info(symbol)

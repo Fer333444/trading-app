@@ -1,6 +1,4 @@
 
-import MetaTrader5 as mt5
-
 # Reemplaza estos datos con los reales de tu cuenta
 login = 510065036         # Tu número de cuenta MT5
 password = "8j!gSx?FL" # Tu contraseña MT5
