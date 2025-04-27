@@ -16,6 +16,10 @@ from mt5_capital import obtener_balance_mt5
 from mt5_connection_module import enviar_orden_mt5
 import jwt
 from datetime import datetime, timedelta
+try:
+    import MetaTrader5 as mt5
+except ImportError:
+    mt5 = None
 
 SECRET_KEY_JWT = 'mi_clave_secreta_ultrasegura'
 
@@ -31,6 +35,8 @@ app = Flask(__name__)
 app.secret_key = 'clave_segura_123'
 
 def conectar_a_mt5():
+    if mt5 is None:
+        return False  # No intentar conectar si no hay MetaTrader5
     if not all(k in session for k in ['mt5_usuario', 'mt5_password', 'mt5_servidor']):
         return False
     if not mt5.initialize(

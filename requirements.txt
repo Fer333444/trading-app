@@ -2,6 +2,5 @@ Flask==3.1.0
 mysql-connector-python==8.0.27
 bcrypt==3.2.0
 pandas
-MetaTrader5
 PyJWT
 gunicorn
