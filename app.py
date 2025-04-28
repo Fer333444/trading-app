@@ -12,10 +12,6 @@ from datetime import datetime
 
 import jwt
 from datetime import datetime, timedelta
-try:
-    import MetaTrader5 as mt5
-except ImportError:
-    mt5 = None
 
 SECRET_KEY_JWT = 'mi_clave_secreta_ultrasegura'
 
