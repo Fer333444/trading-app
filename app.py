@@ -10,9 +10,6 @@ import os
 import pandas as pd
 from datetime import datetime
 
-from mt5_integration import guardar_operaciones_mt5
-from mt5_capital import obtener_balance_mt5
-from mt5_connection_module import enviar_orden_mt5
 import jwt
 from datetime import datetime, timedelta
 try:
