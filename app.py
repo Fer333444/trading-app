@@ -47,13 +47,18 @@ def conectar_a_mt5():
         return False
     return True
 
+import os
+
+import os
+import mysql.connector
+
 def get_db_connection():
     return mysql.connector.connect(
-        host='mysql.railway.internal',
-        user='root',
-        password='DDjRTUiQoRGFiuvbOoCtMNDLxVpKLUQW',
-        database='railway',
-        port=3306
+        host=os.getenv('DB_HOST', 'mysql-railway.internal'),
+        user=os.getenv('DB_USER', 'root'),
+        password=os.getenv('DB_PASSWORD', 'DDjRTUiQoRGFiuvbOoCtMNDLxVpKLUQW'),
+        database=os.getenv('DB_DATABASE', 'railway'),
+        port=int(os.getenv('DB_PORT', 3306))
     )
 
 # Funcion calcular lotaje Stinu
