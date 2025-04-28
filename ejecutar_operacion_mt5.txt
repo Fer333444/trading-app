@@ -1,4 +1,4 @@
-import MetaTrader5 as mt5
+
 
 def ejecutar_operacion_mt5(simbolo, tipo, volumen):
     if not mt5.initialize():

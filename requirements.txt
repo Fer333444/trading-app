@@ -3,6 +3,6 @@ mysql-connector-python==8.0.27
 bcrypt==3.2.0
 pandas
 PyJWT
-gunicorn
 requests
-
+gunicorn
+python-jose
