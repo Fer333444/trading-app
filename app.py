@@ -117,34 +117,44 @@ def login():
             return "❌ Credenciales incorrectas"
     return render_template('login.html')
 
+import os
+import json
+from flask import Flask, request, redirect, url_for, render_template
+from werkzeug.security import generate_password_hash
+
+app = Flask(__name__)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Verifica que todos los campos están presentes
         username = request.form.get('username')
         password = request.form.get('password')
 
         if not username or not password:
             return "Missing username or password", 400
 
-        # Aquí podrías tener errores al guardar datos o acceder a archivos
         try:
-            # Ejemplo: guardar en JSON
-            with open('usuarios.json', 'r') as f:
-                usuarios = json.load(f)
+            usuarios = {}
+            if os.path.exists('usuarios.json'):
+                with open('usuarios.json', 'r') as f:
+                    usuarios = json.load(f)
 
             if username in usuarios:
                 return "User already exists", 400
 
-            usuarios[username] = password
+            # Encriptar la contraseña con scrypt
+            hashed_password = generate_password_hash(password, method='scrypt')
+
+            usuarios[username] = hashed_password
 
             with open('usuarios.json', 'w') as f:
-                json.dump(usuarios, f)
+                json.dump(usuarios, f, indent=4)
 
             return redirect(url_for('login'))
         except Exception as e:
             print(f"Error en /register: {e}")
             return "Internal error", 500
+
     return render_template('register.html')  # asegúrate de que este archivo exista
 
 @app.route('/editar_perfil')
