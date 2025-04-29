@@ -47,11 +47,11 @@ import mysql.connector
 
 def get_db_connection():
     return mysql.connector.connect(
-        host=os.getenv('DB_HOST', 'mysql-railway.internal'),
-        user=os.getenv('DB_USER', 'root'),
-        password=os.getenv('DB_PASSWORD', 'DDjRTUiQoRGFiuvbOoCtMNDLxVpKLUQW'),
+        host=os.getenv('DB_HOST', 'tramway.proxy.rlwy.net'),
+        user=os.getenv('DB_USER', 'flujo'),
+        password=os.getenv('DB_PASSWORD', 'MiClave1234!'),
         database=os.getenv('DB_DATABASE', 'railway'),
-        port=int(os.getenv('DB_PORT', 3306))
+        port=int(os.getenv('DB_PORT', 39408))
     )
 
 # Funcion calcular lotaje Stinu
