@@ -7,6 +7,7 @@ import mysql.connector
 import bcrypt
 import json
 import os
+from werkzeug.security import check_password_hash
 import pandas as pd
 from datetime import datetime
 
@@ -101,20 +102,26 @@ def calcular_porcentaje_operacion(operacion):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        usuario = request.form['usuario']
-        password = request.form['password']
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT clave_hash FROM usuarios WHERE usuario = %s", (usuario,))
-        stored_hash = cursor.fetchone()
-        cursor.close()
-        conn.close()
-        if stored_hash and bcrypt.checkpw(password.encode('utf-8'), stored_hash[0].encode('utf-8')):
-            session['usuario'] = usuario
-            session['ultimo_login'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            return redirect(url_for('bienvenida'))
-        else:
-            return "❌ Credenciales incorrectas"
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        try:
+            with open('usuarios.json', 'r') as f:
+                usuarios = json.load(f)
+
+            if username not in usuarios:
+                return "Usuario no encontrado", 404
+
+            hashed_password = usuarios[username]
+            if check_password_hash(hashed_password, password):
+                return "Login exitoso", 200
+            else:
+                return "Contraseña incorrecta", 401
+
+        except Exception as e:
+            print(f"Error en /login: {e}")
+            return "Error interno", 500
+
     return render_template('login.html')
 
 import os
