@@ -99,7 +99,7 @@ def calcular_porcentaje_operacion(operacion):
 # Rutas Flask
 
 @app.route('/', methods=['GET', 'POST'])
-@@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
 
