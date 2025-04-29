@@ -99,11 +99,9 @@ def calcular_porcentaje_operacion(operacion):
 # Rutas Flask
 
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/login', methods=['GET', 'POST'])
+@@app.route('/login', methods=['GET'])
 def login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    return render_template('login.html')
 
         try:
             with open('usuarios.json', 'r') as f:
