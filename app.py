@@ -149,9 +149,7 @@ def register():
             if username in usuarios:
                 return "User already exists", 400
 
-            # Encriptar la contraseña con scrypt
             hashed_password = generate_password_hash(password, method='scrypt')
-
             usuarios[username] = hashed_password
 
             with open('usuarios.json', 'w') as f:
@@ -162,7 +160,7 @@ def register():
             print(f"Error en /register: {e}")
             return "Internal error", 500
 
-    return render_template('register.html')  # asegúrate de que este archivo exista
+    return render_template('register.html')
 
 @app.route('/editar_perfil')
 def editar_perfil():
