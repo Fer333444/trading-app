@@ -99,10 +99,11 @@ def calcular_porcentaje_operacion(operacion):
 # Rutas Flask
 
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    try:  # ✅ correctamente alineado
-        ...
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
         try:
             with open('usuarios.json', 'r') as f:
@@ -119,7 +120,7 @@ def login():
 
         except Exception as e:
             print(f"Error en /login: {e}")
-            return "Error interno", 500
+            return f"Error interno: {e}", 500
 
     return render_template('login.html')
 
@@ -175,7 +176,9 @@ def perfil():
 
 @app.route('/bienvenida')
 def bienvenida():
-    return render_template('bienvenida.html')
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+    return f"<h2>¡Bienvenido, {session['usuario']}!</h2><br><a href='/logout'>Cerrar sesión</a>"
 
 @app.route('/logout')
 def logout():
