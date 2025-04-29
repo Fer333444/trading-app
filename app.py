@@ -120,20 +120,32 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        usuario = request.form['usuario']
-        password = request.form['password']
+        # Verifica que todos los campos están presentes
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        if not username or not password:
+            return "Missing username or password", 400
 
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO usuarios (usuario, clave_hash) VALUES (%s, %s)', (usuario, hashed_password.decode('utf-8')))
-        conn.commit()
-        cursor.close()
-        conn.close()
+        # Aquí podrías tener errores al guardar datos o acceder a archivos
+        try:
+            # Ejemplo: guardar en JSON
+            with open('usuarios.json', 'r') as f:
+                usuarios = json.load(f)
 
-        return redirect(url_for('login'))
-    return render_template('register.html')
+            if username in usuarios:
+                return "User already exists", 400
+
+            usuarios[username] = password
+
+            with open('usuarios.json', 'w') as f:
+                json.dump(usuarios, f)
+
+            return redirect(url_for('login'))
+        except Exception as e:
+            print(f"Error en /register: {e}")
+            return "Internal error", 500
+    return render_template('register.html')  # asegúrate de que este archivo exista
 
 @app.route('/editar_perfil')
 def editar_perfil():
