@@ -395,6 +395,13 @@ def exportar_excel():
     df = pd.DataFrame(columnas_deseadas)
     nombre_archivo = f"historial_{usuario}.xlsx"
     df.to_excel(nombre_archivo, index=False, float_format="%.8f")
+@app.route('/')
+def inicio():
+    return '''
+        <h2>Bienvenido a la App de Trading</h2>
+        <a href="/register">Registrarse</a><br>
+        <a href="/login">Iniciar sesión</a>
+    '''
 
     return send_file(nombre_archivo, as_attachment=True)
 @app.route('/exportar_todo_excel')
