@@ -114,12 +114,12 @@ def login():
 
             hashed_password = usuarios[username]
             if check_password_hash(hashed_password, password):
-                return "Login exitoso", 200
+                session['usuario'] = username
+                return redirect(url_for('bienvenida'))
             else:
                 return "Contraseña incorrecta", 401
 
         except Exception as e:
-            print(f"Error en /login: {e}")
             return f"Error interno: {e}", 500
 
     return render_template('login.html')
@@ -178,7 +178,7 @@ def perfil():
 def bienvenida():
     if 'usuario' not in session:
         return redirect(url_for('login'))
-    return f"<h2>¡Bienvenido, {session['usuario']}!</h2><br><a href='/logout'>Cerrar sesión</a>"
+    return f"<h2>Bienvenido, {session['usuario']}!</h2><a href='/logout'>Cerrar sesión</a>"
 
 @app.route('/logout')
 def logout():
