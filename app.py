@@ -100,7 +100,7 @@ def calcular_porcentaje_operacion(operacion):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def login():  # ← Este nombre es lo que usa url_for('login')
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
