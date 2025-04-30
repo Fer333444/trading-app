@@ -153,7 +153,7 @@ def perfil():
 def bienvenida():
     if 'usuario' not in session:
         return redirect(url_for('login'))
-    return f"<h2>¡Bienvenido, {session['usuario']}!</h2><br><a href='/logout'>Cerrar sesión</a>"
+    return render_template('bienvenida.html', usuario=session['usuario'])
 
 @app.route('/logout')
 def logout():
