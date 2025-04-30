@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Bienvenida</title>
+  <meta charset="UTF-8">
+  <title>Bienvenida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>¡Bienvenido, {{ usuario }}!</h2>
-    <ul>
-        <li><a href="/lotaje_tiempo_real">📊 Calculadora de Lotaje</a></li>
-        <li><a href="/sistema_riesgo">📈 Sistema de Riesgo</a></li>
-        <li><a href="/historial">📄 Historial</a></li>
-        <li><a href="/logout">🔒 Cerrar sesión</a></li>
-    </ul>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-body text-center">
+        <h2 class="mb-4">¡Bienvenido, {{ usuario }}!</h2>
+        <div class="d-grid gap-3">
+          <a href="/lotaje_tiempo_real" class="btn btn-outline-primary">📊 Calculadora de Lotaje</a>
+          <a href="/sistema_riesgo" class="btn btn-outline-success">📈 Sistema de Riesgo</a>
+          <a href="/historial" class="btn btn-outline-dark">📄 Historial</a>
+          <a href="/logout" class="btn btn-danger">🔒 Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

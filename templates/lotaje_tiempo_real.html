@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Calculadora de Lotaje</title>
+  <meta charset="UTF-8">
+  <title>Calculadora de Lotaje</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>Calculadora de Lotaje STINU</h2>
-    <form method="POST">
-        <label>Par de divisas (ej: EUR/USD):</label><br>
-        <input type="text" name="symbol" required value="{{ symbol }}"><br><br>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="text-center mb-4">📊 Calculadora de Lotaje STINU</h3>
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Par de divisas</label>
+            <input type="text" class="form-control" name="symbol" value="{{ symbol }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Capital disponible</label>
+            <input type="number" class="form-control" step="0.01" name="capital" value="{{ capital }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">% de riesgo</label>
+            <input type="number" class="form-control" step="0.01" name="riesgo_pct" value="{{ riesgo_pct }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Stop Loss (en pips)</label>
+            <input type="number" class="form-control" step="0.1" name="stop_loss" value="{{ stop_loss }}" required>
+          </div>
+          <button class="btn btn-primary w-100">Calcular</button>
+        </form>
 
-        <label>Capital disponible:</label><br>
-        <input type="number" step="0.01" name="capital" required value="{{ capital }}"><br><br>
-
-        <label>% de riesgo:</label><br>
-        <input type="number" step="0.01" name="riesgo_pct" required value="{{ riesgo_pct }}"><br><br>
-
-        <label>Stop Loss (en pips):</label><br>
-        <input type="number" step="0.1" name="stop_loss" required value="{{ stop_loss }}"><br><br>
-
-        <button type="submit">Calcular</button>
-    </form>
-
-    {% if lotaje %}
-        <h3>✅ Resultado:</h3>
-        <p><strong>Lotaje:</strong> {{ lotaje }}</p>
-        <p><strong>Riesgo en dinero:</strong> ${{ riesgo_dinero }}</p>
-    {% elif error %}
-        <p style="color:red">{{ error }}</p>
-    {% endif %}
+        {% if lotaje %}
+        <div class="alert alert-success mt-4">
+          <h5>✅ Resultado:</h5>
+          <p><strong>Lotaje:</strong> {{ lotaje }}</p>
+          <p><strong>Riesgo en dinero:</strong> ${{ riesgo_dinero }}</p>
+        </div>
+        {% elif error %}
+        <div class="alert alert-danger mt-4">{{ error }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </body>
 </html>
