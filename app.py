@@ -98,8 +98,6 @@ def calcular_porcentaje_operacion(operacion):
 
 # Rutas Flask
 
-@app.route('/', methods=['GET', 'POST'])
-
 import os
 import json
 from flask import Flask, request, redirect, url_for, render_template
