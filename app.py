@@ -63,12 +63,12 @@ def calcular_lotaje_stinu(symbol, capital, riesgo_pct, stop_loss):
         'GBP/USD': 10.00,
         'AUD/USD': 10.00,
         'NZD/USD': 10.00,
-        'USD/JPY': 7.05,
+        'USD/JPY': 7.00,
         'USD/CHF': 12.18,
         'USD/CAD': 7.23,
         'EUR/GBP': 13.31,
         'EUR/JPY': 7.05,
-        'GBP/JPY': 7.05,
+        'GBP/JPY': 9.10,
         'AUD/JPY': 7.00,
         'NZD/JPY': 7.045,
         'CAD/JPY': 7.05,
@@ -80,7 +80,9 @@ def calcular_lotaje_stinu(symbol, capital, riesgo_pct, stop_loss):
         'GBP/NZD': 6.00,
         'XAU/USD': 10.00
     }
-    valor_pip = valor_pip_fijo.get(symbol.upper(), 10.0)
+
+    symbol = symbol.upper()
+    valor_pip = valor_pip_fijo.get(symbol, 10.0)  # valor por defecto si no está definido
     riesgo_dinero = round(capital * (riesgo_pct / 100), 2)
     lotaje = round(riesgo_dinero / (stop_loss * valor_pip), 3)
     return lotaje, riesgo_dinero
