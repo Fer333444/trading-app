@@ -11,23 +11,49 @@
     <div class="card shadow">
       <div class="card-body">
         <h3 class="text-center mb-4">📊 Calculadora de Lotaje STINU</h3>
+
         <form method="POST">
           <div class="mb-3">
             <label class="form-label">Par de divisas</label>
-            <input type="text" class="form-control" name="symbol" value="{{ symbol }}" required>
+            <select class="form-select" name="symbol" required>
+              <option value="EUR/USD" {% if symbol == 'EUR/USD' %}selected{% endif %}>EUR/USD</option>
+              <option value="GBP/USD" {% if symbol == 'GBP/USD' %}selected{% endif %}>GBP/USD</option>
+              <option value="AUD/USD" {% if symbol == 'AUD/USD' %}selected{% endif %}>AUD/USD</option>
+              <option value="NZD/USD" {% if symbol == 'NZD/USD' %}selected{% endif %}>NZD/USD</option>
+              <option value="USD/JPY" {% if symbol == 'USD/JPY' %}selected{% endif %}>USD/JPY</option>
+              <option value="USD/CHF" {% if symbol == 'USD/CHF' %}selected{% endif %}>USD/CHF</option>
+              <option value="USD/CAD" {% if symbol == 'USD/CAD' %}selected{% endif %}>USD/CAD</option>
+              <option value="EUR/GBP" {% if symbol == 'EUR/GBP' %}selected{% endif %}>EUR/GBP</option>
+              <option value="EUR/JPY" {% if symbol == 'EUR/JPY' %}selected{% endif %}>EUR/JPY</option>
+              <option value="GBP/JPY" {% if symbol == 'GBP/JPY' %}selected{% endif %}>GBP/JPY</option>
+              <option value="AUD/JPY" {% if symbol == 'AUD/JPY' %}selected{% endif %}>AUD/JPY</option>
+              <option value="NZD/JPY" {% if symbol == 'NZD/JPY' %}selected{% endif %}>NZD/JPY</option>
+              <option value="CAD/JPY" {% if symbol == 'CAD/JPY' %}selected{% endif %}>CAD/JPY</option>
+              <option value="EUR/CAD" {% if symbol == 'EUR/CAD' %}selected{% endif %}>EUR/CAD</option>
+              <option value="EUR/AUD" {% if symbol == 'EUR/AUD' %}selected{% endif %}>EUR/AUD</option>
+              <option value="EUR/CHF" {% if symbol == 'EUR/CHF' %}selected{% endif %}>EUR/CHF</option>
+              <option value="GBP/CHF" {% if symbol == 'GBP/CHF' %}selected{% endif %}>GBP/CHF</option>
+              <option value="GBP/CAD" {% if symbol == 'GBP/CAD' %}selected{% endif %}>GBP/CAD</option>
+              <option value="GBP/NZD" {% if symbol == 'GBP/NZD' %}selected{% endif %}>GBP/NZD</option>
+              <option value="XAU/USD" {% if symbol == 'XAU/USD' %}selected{% endif %}>XAU/USD (Oro)</option>
+            </select>
           </div>
+
           <div class="mb-3">
             <label class="form-label">Capital disponible</label>
             <input type="number" class="form-control" step="0.01" name="capital" value="{{ capital }}" required>
           </div>
+
           <div class="mb-3">
             <label class="form-label">% de riesgo</label>
             <input type="number" class="form-control" step="0.01" name="riesgo_pct" value="{{ riesgo_pct }}" required>
           </div>
+
           <div class="mb-3">
             <label class="form-label">Stop Loss (en pips)</label>
             <input type="number" class="form-control" step="0.1" name="stop_loss" value="{{ stop_loss }}" required>
           </div>
+
           <button class="btn btn-primary w-100">Calcular</button>
         </form>
 
