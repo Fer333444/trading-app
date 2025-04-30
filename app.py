@@ -130,7 +130,9 @@ def register():
             with open('usuarios.json', 'w') as f:
                 json.dump(usuarios, f, indent=4)
 
+            session['pre_username'] = username  # ← se guarda para autocompletar
             return redirect(url_for('login'))
+
         except Exception as e:
             print(f"Error en /register: {e}")
             return "Internal error", 500
@@ -691,7 +693,7 @@ def login():
         except Exception as e:
             return f"Error interno: {e}", 500
 
-    return render_template('login.html')
+    return render_template('login.html', pre_username=session.get('pre_username', ''))
 
 
 
