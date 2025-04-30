@@ -99,30 +99,6 @@ def calcular_porcentaje_operacion(operacion):
 # Rutas Flask
 
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/login', methods=['GET', 'POST'])
-def login():  # ← Este nombre es lo que usa url_for('login')
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-
-        try:
-            with open('usuarios.json', 'r') as f:
-                usuarios = json.load(f)
-
-            if username not in usuarios:
-                return "Usuario no encontrado", 404
-
-            hashed_password = usuarios[username]
-            if check_password_hash(hashed_password, password):
-                session['usuario'] = username
-                return redirect(url_for('bienvenida'))
-            else:
-                return "Contraseña incorrecta", 401
-
-        except Exception as e:
-            return f"Error interno: {e}", 500
-
-    return render_template('login.html')
 
 import os
 import json
@@ -178,7 +154,7 @@ def perfil():
 def bienvenida():
     if 'usuario' not in session:
         return redirect(url_for('login'))
-    return f"<h2>Bienvenido, {session['usuario']}!</h2><a href='/logout'>Cerrar sesión</a>"
+    return f"<h2>¡Bienvenido, {session['usuario']}!</h2><br><a href='/logout'>Cerrar sesión</a>"
 
 @app.route('/logout')
 def logout():
@@ -697,6 +673,30 @@ def api_register():
 @app.errorhandler(500)
 def error_500(e):
     return f"Error interno general: {e}", 500
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        try:
+            with open('usuarios.json', 'r') as f:
+                usuarios = json.load(f)
+
+            if username not in usuarios:
+                return "Usuario no encontrado", 404
+
+            hashed_password = usuarios[username]
+            if check_password_hash(hashed_password, password):
+                session['usuario'] = username
+                return redirect(url_for('bienvenida'))
+            else:
+                return "Contraseña incorrecta", 401
+
+        except Exception as e:
+            return f"Error interno: {e}", 500
+
+    return render_template('login.html')
 
 
 
