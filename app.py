@@ -410,6 +410,25 @@ def cambiar_cuenta_mt5():
         return redirect(url_for('sistema_riesgo'))
 
     return render_template('cambiar_cuenta_mt5.html')
+@app.route('/api/lotaje', methods=['POST'])
+def api_lotaje():
+    data = request.get_json()
+    symbol = data.get('symbol')
+    capital = data.get('capital')
+    riesgo_pct = data.get('riesgo_pct')
+    stop_loss = data.get('stop_loss')
+
+    if not symbol or capital is None or riesgo_pct is None or stop_loss is None:
+        return jsonify({"error": "Faltan parámetros"}), 400
+
+    try:
+        lotaje, riesgo_dinero = calcular_lotaje_stinu(symbol, float(capital), float(riesgo_pct), float(stop_loss))
+        return jsonify({
+            "lotaje": lotaje,
+            "riesgo_dinero": riesgo_dinero
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 @app.route('/api/historial', methods=['GET'])
 def api_historial():
     token = request.headers.get('Authorization')
