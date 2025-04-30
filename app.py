@@ -97,13 +97,14 @@ def calcular_porcentaje_operacion(operacion):
     return 0.0
 
 # Rutas Flask
-
+	
 import os
 import json
 from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
+app.secret_key = 'clave_super_secreta_123'
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
