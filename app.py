@@ -341,18 +341,27 @@ def lotaje_tiempo_real():
             riesgo_dinero = 0
 
             if tipo_riesgo == "porcentaje":
-                riesgo_pct = float(request.form['riesgo_pct'])
+                riesgo_pct_str = request.form.get('riesgo_pct')
+                if not riesgo_pct_str:
+                    raise ValueError("Debes ingresar el porcentaje de riesgo.")
+                riesgo_pct = float(riesgo_pct_str)
                 riesgo_dinero = round(capital * (riesgo_pct / 100), 2)
+
             elif tipo_riesgo == "monto":
-                riesgo_monto = float(request.form['riesgo_monto'])
+                riesgo_monto_str = request.form.get('riesgo_monto')
+                if not riesgo_monto_str:
+                    raise ValueError("Debes ingresar el monto de riesgo.")
+                riesgo_monto = float(riesgo_monto_str)
                 riesgo_dinero = riesgo_monto
             else:
-                error = "Tipo de riesgo no válido."
+                raise ValueError("Tipo de riesgo no válido.")
 
             lotaje = round(riesgo_dinero / (stop_loss * 10), 3)
 
+        except ValueError as e:
+            error = f"⚠️ {e}"
         except Exception as e:
-            error = f"❌ Error: {e}"
+            error = f"❌ Error inesperado: {e}"
 
     return render_template(
         'lotaje_tiempo_real.html',
