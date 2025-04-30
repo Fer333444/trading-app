@@ -694,6 +694,9 @@ def api_register():
     conn.close()
 
     return jsonify({"mensaje": "Usuario registrado exitosamente."}), 201
+@app.errorhandler(500)
+def error_500(e):
+    return f"Error interno general: {e}", 500
 
 
 
