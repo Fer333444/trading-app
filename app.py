@@ -63,26 +63,28 @@ def calcular_lotaje_stinu(symbol, capital, riesgo_pct, stop_loss):
         'GBP/USD': 10.00,
         'AUD/USD': 10.00,
         'NZD/USD': 10.00,
-        'USD/JPY': 7.05,
-        'USD/CHF': 12.18,
+        'USD/JPY': 7.00,
+        'USD/CHF': 9.20,
         'USD/CAD': 7.23,
-        'EUR/GBP': 13.31,
-        'EUR/JPY': 7.05,
-        'GBP/JPY': 7.05,
-        'AUD/JPY': 7.00,
-        'NZD/JPY': 7.045,
-        'CAD/JPY': 7.05,
-        'EUR/CAD': 7.05,
-        'EUR/AUD': 6.41,
-        'EUR/CHF': 12.16,
-        'GBP/CHF': 12.16,
-        'GBP/CAD': 7.22,
-        'GBP/NZD': 6.00,
+        'EUR/GBP': 8.60,
+        'EUR/JPY': 7.13,
+        'GBP/JPY': 8.70,
+        'AUD/JPY': 6.98,
+        'NZD/JPY': 6.70,
+        'CAD/JPY': 6.80,
+        'EUR/CAD': 7.30,
+        'EUR/AUD': 6.20,
+        'EUR/CHF': 9.10,
+        'GBP/CHF': 9.00,
+        'GBP/CAD': 7.50,
+        'GBP/NZD': 6.10,
         'XAU/USD': 10.00
     }
-    valor_pip = valor_pip_fijo.get(symbol.upper(), 10.0)
+
+    symbol = symbol.upper()
+    valor_pip = valor_pip_fijo.get(symbol, 10.0)
     riesgo_dinero = round(capital * (riesgo_pct / 100), 2)
-    lotaje = round(riesgo_dinero / (stop_loss * valor_pip), 3)
+    lotaje = round(riesgo_dinero / (stop_loss * valor_pip), 2)
     return lotaje, riesgo_dinero
 
 def calcular_porcentaje_operacion(operacion):
