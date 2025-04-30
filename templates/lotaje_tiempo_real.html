@@ -2,50 +2,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Calculadora de Lotaje (Stinu)</title>
+    <title>Calculadora de Lotaje</title>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; background-color: #f5f5f5;">
+<body>
+    <h2>Calculadora de Lotaje STINU</h2>
+    <form method="POST">
+        <label>Par de divisas (ej: EUR/USD):</label><br>
+        <input type="text" name="symbol" required value="{{ symbol }}"><br><br>
 
-    <h2>📈 Calculadora de Lotaje (Stinu)</h2>
+        <label>Capital disponible:</label><br>
+        <input type="number" step="0.01" name="capital" required value="{{ capital }}"><br><br>
 
-    <form method="POST" style="background: white; padding: 20px; margin: auto; width: 300px; border-radius: 10px;">
-        <label>Par de Divisas</label><br>
-        <select name="symbol" style="width: 100%; padding: 5px;">
-            {% set pares = ["EUR/USD", "GBP/USD", "AUD/USD", "NZD/USD", "USD/JPY", "USD/CHF", "USD/CAD", "EUR/GBP", "EUR/JPY", "GBP/JPY", "AUD/JPY", "NZD/JPY", "CAD/JPY", "EUR/CAD", "EUR/AUD", "EUR/CHF", "GBP/CHF", "GBP/CAD", "GBP/NZD", "XAU/USD"] %}
-            {% for par in pares %}
-                <option value="{{ par }}" {% if par == symbol %}selected{% endif %}>{{ par }}</option>
-            {% endfor %}
-        </select><br><br>
+        <label>% de riesgo:</label><br>
+        <input type="number" step="0.01" name="riesgo_pct" required value="{{ riesgo_pct }}"><br><br>
 
-        <label>Capital</label><br>
-        <input type="number" name="capital" value="{{ capital }}" style="width: 100%; padding: 5px;"><br><br>
+        <label>Stop Loss (en pips):</label><br>
+        <input type="number" step="0.1" name="stop_loss" required value="{{ stop_loss }}"><br><br>
 
-        <label>Riesgo (%)</label><br>
-        <input type="number" step="any" name="riesgo_pct" value="{{ riesgo_pct }}" style="width: 100%; padding: 5px;"><br><br>
-
-        <label>Stop Loss (pips)</label><br>
-        <input type="number" step="any" name="stop_loss" value="{{ stop_loss }}" style="width: 100%; padding: 5px;"><br><br>
-
-        <button type="submit" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Calcular Lotaje</button>
+        <button type="submit">Calcular</button>
     </form>
 
     {% if lotaje %}
-    <div style="margin-top: 20px; background-color: #e3f2fd; display: inline-block; padding: 20px; border-radius: 10px;">
-        <p>💰 <b>Riesgo:</b> ${{ riesgo_dinero }}</p>
-        <p>📊 <b>Lotaje recomendado:</b> {{ lotaje }}</p>
-    </div>
+        <h3>✅ Resultado:</h3>
+        <p><strong>Lotaje:</strong> {{ lotaje }}</p>
+        <p><strong>Riesgo en dinero:</strong> ${{ riesgo_dinero }}</p>
+    {% elif error %}
+        <p style="color:red">{{ error }}</p>
     {% endif %}
-
-    {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-
-    <br><br>
-
-    <!-- ✅ Botón "Ir al Inicio" corregido -->
-    <a href="{{ url_for('bienvenida') }}">
-        <button style="background-color: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 5px;">⬅️ Volver a Inicio</button>
-    </a>
-
 </body>
 </html>
