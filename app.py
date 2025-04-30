@@ -328,6 +328,7 @@ def lotaje_tiempo_real():
     error = None
     capital = ''
     riesgo_pct = ''
+    riesgo_monto = ''
     stop_loss = ''
     symbol = 'EUR/USD'
 
@@ -335,15 +336,35 @@ def lotaje_tiempo_real():
         try:
             symbol = request.form['symbol']
             capital = float(request.form['capital'])
-            riesgo_pct = float(request.form['riesgo_pct'])
             stop_loss = float(request.form['stop_loss'])
+            tipo_riesgo = request.form.get('tipo_riesgo')
+            riesgo_dinero = 0
 
-            lotaje, riesgo_dinero = calcular_lotaje_stinu(symbol, capital, riesgo_pct, stop_loss)
+            if tipo_riesgo == "porcentaje":
+                riesgo_pct = float(request.form['riesgo_pct'])
+                riesgo_dinero = round(capital * (riesgo_pct / 100), 2)
+            elif tipo_riesgo == "monto":
+                riesgo_monto = float(request.form['riesgo_monto'])
+                riesgo_dinero = riesgo_monto
+            else:
+                error = "Tipo de riesgo no válido."
+
+            lotaje = round(riesgo_dinero / (stop_loss * 10), 3)
 
         except Exception as e:
             error = f"❌ Error: {e}"
 
-    return render_template('lotaje_tiempo_real.html', lotaje=lotaje, riesgo_dinero=riesgo_dinero, error=error, capital=capital if request.method == 'POST' else '', riesgo_pct=riesgo_pct if request.method == 'POST' else '', stop_loss=stop_loss if request.method == 'POST' else '', symbol=symbol if request.method == 'POST' else 'EUR/USD')
+    return render_template(
+        'lotaje_tiempo_real.html',
+        lotaje=lotaje,
+        riesgo_dinero=riesgo_dinero,
+        error=error,
+        capital=capital,
+        riesgo_pct=riesgo_pct,
+        riesgo_monto=riesgo_monto,
+        stop_loss=stop_loss,
+        symbol=symbol
+    )
 @app.route('/exportar_excel')
 def exportar_excel():
     if 'usuario' not in session:

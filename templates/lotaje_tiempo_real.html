@@ -40,13 +40,21 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Capital disponible</label>
-            <input type="number" class="form-control" step="0.01" name="capital" value="{{ capital }}" required>
+            <label class="form-label">Tipo de riesgo</label>
+            <select class="form-select" id="tipo_riesgo" name="tipo_riesgo" onchange="alternarRiesgo()">
+              <option value="porcentaje" selected>Riesgo en porcentaje (%)</option>
+              <option value="monto">Riesgo en monto ($)</option>
+            </select>
           </div>
 
-          <div class="mb-3">
+          <div class="mb-3" id="campo_porcentaje">
             <label class="form-label">% de riesgo</label>
-            <input type="number" class="form-control" step="0.01" name="riesgo_pct" value="{{ riesgo_pct }}" required>
+            <input type="number" class="form-control" step="0.01" name="riesgo_pct" value="{{ riesgo_pct }}">
+          </div>
+
+          <div class="mb-3 d-none" id="campo_monto">
+            <label class="form-label">Monto en riesgo ($)</label>
+            <input type="number" class="form-control" step="0.01" name="riesgo_monto" value="{{ riesgo_monto }}">
           </div>
 
           <div class="mb-3">
@@ -69,5 +77,14 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function alternarRiesgo() {
+      const tipo = document.getElementById('tipo_riesgo').value;
+      document.getElementById('campo_porcentaje').classList.toggle('d-none', tipo !== 'porcentaje');
+      document.getElementById('campo_monto').classList.toggle('d-none', tipo !== 'monto');
+    }
+    window.onload = alternarRiesgo;
+  </script>
 </body>
 </html>
