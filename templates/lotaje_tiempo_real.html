@@ -15,7 +15,7 @@
         <form method="POST">
           <div class="mb-3">
             <label class="form-label">Par de divisas</label>
-            <select class="form-select" name="symbol" required>
+            <select class="form-select" name="symbol" required onchange="this.form.submit()">
               <option value="EUR/USD" {% if symbol == 'EUR/USD' %}selected{% endif %}>EUR/USD</option>
               <option value="GBP/USD" {% if symbol == 'GBP/USD' %}selected{% endif %}>GBP/USD</option>
               <option value="AUD/USD" {% if symbol == 'AUD/USD' %}selected{% endif %}>AUD/USD</option>
@@ -86,13 +86,10 @@
   <script>
     function alternarRiesgo() {
       const tipo = document.getElementById('tipo_riesgo').value;
-
-      // Mostrar capital solo cuando el tipo es porcentaje
       document.getElementById('campo_capital').classList.toggle('d-none', tipo === 'monto');
       document.getElementById('campo_porcentaje').classList.toggle('d-none', tipo !== 'porcentaje');
       document.getElementById('campo_monto').classList.toggle('d-none', tipo !== 'monto');
     }
-
     window.onload = alternarRiesgo;
   </script>
 </body>
