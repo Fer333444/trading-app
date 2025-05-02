@@ -333,17 +333,19 @@ def lotaje_tiempo_real():
     riesgo_monto = ''
     stop_loss = ''
     symbol = 'EUR/USD'
+    tipo_riesgo = 'porcentaje'
 
     if request.method == 'POST':
         try:
             symbol = request.form['symbol']
-capital = float(request.form['capital'])
-stop_loss = float(request.form['stop_loss'])
-tipo_riesgo = request.form.get('tipo_riesgo')
+            capital = float(request.form['capital'])
+            stop_loss = float(request.form['stop_loss'])
+            tipo_riesgo = request.form.get('tipo_riesgo')
+            riesgo_dinero = 0
 
-# ✅ Validación recomendada
-if not symbol or not stop_loss or not tipo_riesgo:
-    raise ValueError("Completa todos los campos antes de calcular.")
+            # ✅ Validación general
+            if not symbol or not stop_loss or not tipo_riesgo:
+                raise ValueError("Completa todos los campos antes de calcular.")
 
             if tipo_riesgo == "porcentaje":
                 riesgo_pct_str = request.form.get('riesgo_pct')
@@ -361,7 +363,34 @@ if not symbol or not stop_loss or not tipo_riesgo:
             else:
                 raise ValueError("Tipo de riesgo no válido.")
 
-            lotaje = round(riesgo_dinero / (stop_loss * 10), 3)
+            # 🧠 Asumimos valor pip fijo 10.0, reemplaza si tienes más lógica
+            valor_pip_fijo = {
+                'EUR/USD': 10.00,
+                'GBP/USD': 10.00,
+                'AUD/USD': 10.00,
+                'NZD/USD': 10.00,
+                'USD/JPY': 7.00,
+                'USD/CHF': 9.20,
+                'USD/CAD': 7.23,
+                'EUR/GBP': 8.60,
+                'EUR/JPY': 7.13,
+                'GBP/JPY': 8.70,
+                'AUD/JPY': 6.98,
+                'NZD/JPY': 6.70,
+                'CAD/JPY': 6.80,
+                'EUR/CAD': 7.30,
+                'EUR/AUD': 6.20,
+                'EUR/CHF': 9.10,
+                'GBP/CHF': 9.00,
+                'GBP/CAD': 7.50,
+                'GBP/NZD': 6.10,
+                'XAU/USD': 10.00
+            }
+
+            symbol = symbol.upper()
+            valor_pip = valor_pip_fijo.get(symbol, 10.0)
+
+            lotaje = round(riesgo_dinero / (stop_loss * valor_pip), 2)
 
         except ValueError as e:
             error = f"⚠️ {e}"
@@ -377,7 +406,8 @@ if not symbol or not stop_loss or not tipo_riesgo:
         riesgo_pct=riesgo_pct,
         riesgo_monto=riesgo_monto,
         stop_loss=stop_loss,
-        symbol=symbol
+        symbol=symbol,
+        tipo_riesgo=tipo_riesgo
     )
 @app.route('/exportar_excel')
 def exportar_excel():
