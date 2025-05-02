@@ -15,7 +15,7 @@
         <form method="POST">
           <div class="mb-3">
             <label class="form-label">Par de divisas</label>
-            <select class="form-select" name="symbol" required onchange="this.form.submit()">
+            <select class="form-select" name="symbol" required>
               <option value="EUR/USD" {% if symbol == 'EUR/USD' %}selected{% endif %}>EUR/USD</option>
               <option value="GBP/USD" {% if symbol == 'GBP/USD' %}selected{% endif %}>GBP/USD</option>
               <option value="AUD/USD" {% if symbol == 'AUD/USD' %}selected{% endif %}>AUD/USD</option>
