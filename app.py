@@ -337,10 +337,13 @@ def lotaje_tiempo_real():
     if request.method == 'POST':
         try:
             symbol = request.form['symbol']
-            capital = float(request.form['capital'])
-            stop_loss = float(request.form['stop_loss'])
-            tipo_riesgo = request.form.get('tipo_riesgo')
-            riesgo_dinero = 0
+capital = float(request.form['capital'])
+stop_loss = float(request.form['stop_loss'])
+tipo_riesgo = request.form.get('tipo_riesgo')
+
+# ✅ Validación recomendada
+if not symbol or not stop_loss or not tipo_riesgo:
+    raise ValueError("Completa todos los campos antes de calcular.")
 
             if tipo_riesgo == "porcentaje":
                 riesgo_pct_str = request.form.get('riesgo_pct')
